@@ -1,5 +1,5 @@
-<script src="https://cdn.webrtc-experiment.com/DetectRTC.js"> </script>
-<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="../DetectRTC.js"> </script>
+<!-- <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script> -->
 <script>
 navigator.mediaDevices.getUserMedia({audio: true, video: true }).then(function(stream) {
     var temp = document.createElement('video');
@@ -9,7 +9,7 @@ navigator.mediaDevices.getUserMedia({audio: true, video: true }).then(function(s
 
     DetectRTC.load(function() {
         document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">');
-        
+
         DetectRTC.audioInputDevices.forEach(function(device) {
             document.write(JSON.stringify(device, null, '<br>'));
             document.write('<hr>');

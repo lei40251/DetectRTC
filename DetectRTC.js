@@ -1,6 +1,6 @@
 'use strict';
 
-// Last Updated On: 2019-01-12 7:01:30 AM UTC
+// Last Updated On: 2019-02-25 1:19:43 AM UTC
 
 // ________________
 // DetectRTC v1.3.9
@@ -352,6 +352,9 @@
 
         var os = unknown;
         var clientStrings = [{
+            s: 'Chrome OS',
+            r: /CrOS/
+        }, {
             s: 'Windows 10',
             r: /(Windows 10.0|Windows NT 10.0)/
         }, {
@@ -883,8 +886,12 @@
     } else if (DetectRTC.browser.isFirefox && DetectRTC.browser.version >= 34) {
         isScreenCapturingSupported = true;
     } else if (DetectRTC.browser.isEdge && DetectRTC.browser.version >= 17) {
-        isScreenCapturingSupported = true; // navigator.getDisplayMedia
+        isScreenCapturingSupported = true;
     } else if (DetectRTC.osName === 'Android' && DetectRTC.browser.isChrome) {
+        isScreenCapturingSupported = true;
+    }
+
+    if (!!navigator.getDisplayMedia || (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia)) {
         isScreenCapturingSupported = true;
     }
 
@@ -944,22 +951,31 @@
 
     // ------
     var isGetUserMediaSupported = false;
+    var isGetDisplayMediaSupported = false;
     if (navigator.getUserMedia) {
         isGetUserMediaSupported = true;
     } else if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         isGetUserMediaSupported = true;
     }
+    if (navigator.getDisplayMedia) {
+        isGetDisplayMediaSupported = true;
+    } else if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+        isGetDisplayMediaSupported = true;
+    }
 
     if (DetectRTC.browser.isChrome && DetectRTC.browser.version >= 46 && !/^(https:|chrome-extension:)$/g.test(location.protocol || '')) {
         if (typeof document !== 'undefined' && typeof document.domain === 'string' && document.domain.search && document.domain.search(/localhost|127.0./g) === -1) {
             isGetUserMediaSupported = 'Requires HTTPs';
+            isGetDisplayMediaSupported = 'Requires HTTPs';
         }
     }
 
     if (DetectRTC.osName === 'Nodejs') {
         isGetUserMediaSupported = false;
+        isGetDisplayMediaSupported = false;
     }
     DetectRTC.isGetUserMediaSupported = isGetUserMediaSupported;
+    DetectRTC.isGetDisplayMediaSupported = isGetDisplayMediaSupported;
 
     var displayResolution = '';
     if (screen.width) {

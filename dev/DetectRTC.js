@@ -45,7 +45,7 @@ if (DetectRTC.browser.isChrome && DetectRTC.browser.version >= 35) {
     isScreenCapturingSupported = true;
 }
 
-if(!!navigator.getDisplayMedia || (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia)) {
+if (!!navigator.getDisplayMedia || (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia)) {
     isScreenCapturingSupported = true;
 }
 
@@ -105,22 +105,31 @@ DetectRTC.isMobileDevice = isMobileDevice; // "isMobileDevice" boolean is define
 
 // ------
 var isGetUserMediaSupported = false;
+var isGetDisplayMediaSupported = false;
 if (navigator.getUserMedia) {
     isGetUserMediaSupported = true;
 } else if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     isGetUserMediaSupported = true;
 }
+if (navigator.getDisplayMedia) {
+    isGetDisplayMediaSupported = true;
+} else if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+    isGetDisplayMediaSupported = true;
+}
 
 if (DetectRTC.browser.isChrome && DetectRTC.browser.version >= 46 && !/^(https:|chrome-extension:)$/g.test(location.protocol || '')) {
     if (typeof document !== 'undefined' && typeof document.domain === 'string' && document.domain.search && document.domain.search(/localhost|127.0./g) === -1) {
         isGetUserMediaSupported = 'Requires HTTPs';
+        isGetDisplayMediaSupported = 'Requires HTTPs';
     }
 }
 
 if (DetectRTC.osName === 'Nodejs') {
     isGetUserMediaSupported = false;
+    isGetDisplayMediaSupported = false;
 }
 DetectRTC.isGetUserMediaSupported = isGetUserMediaSupported;
+DetectRTC.isGetDisplayMediaSupported = isGetDisplayMediaSupported;
 
 var displayResolution = '';
 if (screen.width) {

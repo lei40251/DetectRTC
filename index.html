@@ -77,9 +77,9 @@
             Script used to detect WebRTC features!
             https://github.com/muaz-khan/DetectRTC#how-to-link
         -->
-        <script src="https://cdn.webrtc-experiment.com/DetectRTC.js"> </script>
+        <script src="./DetectRTC.js"> </script>
         <script src="https://cdn.webrtc-experiment.com/screenshot.js"></script>
-        <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+        <!-- <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script> -->
     </head>
 
     <body>
@@ -226,6 +226,8 @@
                     appendTR('Website has microphone permissions?', printVal(DetectRTC.isWebsiteHasMicrophonePermissions), 'isWebsiteHasMicrophonePermissions');
 
                     appendTR('Browser allows getUserMedia on this page?', printVal(DetectRTC.isGetUserMediaSupported), 'isGetUserMediaSupported');
+
+                    appendTR('Browser allows getDisplayMedia on this page?', printVal(DetectRTC.isGetDisplayMediaSupported), 'isGetDisplayMediaSupported');
 
                     appendTR('Can you change output audio devices?' + getInfoDiv('infoIcon-set-sink-id'), printVal(DetectRTC.isSetSinkIdSupported), 'isSetSinkIdSupported');
 
